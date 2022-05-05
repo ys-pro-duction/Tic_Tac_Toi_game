@@ -4,56 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F2F2"
-    android:padding="3dp"
+    android:background="#1C0042"
     tools:context=".MainActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#ffffff"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="#000000"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/xx_player"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/oo_player">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_ver1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.33" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_ver2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.66" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_ver3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.33" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_ver4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.66" />
 
             <LinearLayout
                 android:id="@+id/stick1"
@@ -63,9 +33,50 @@
                 android:background="@drawable/line"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/guide_ver1"
-                app:layout_constraintStart_toStartOf="@+id/guide_ver1"
+                app:layout_constraintEnd_toStartOf="@+id/item2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/item1"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/stick5"
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/line_white"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/stick1"
+                app:layout_constraintEnd_toEndOf="@id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/stick1"
+                app:layout_constraintTop_toTopOf="@id/stick1" />
+
+            <LinearLayout
+                android:id="@+id/stick3"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:alpha="0.9"
+                android:background="@drawable/line"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/item4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item1" />
+
+            <LinearLayout
+                android:id="@+id/stick6"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/line_white"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/stick3"
+                app:layout_constraintEnd_toEndOf="@id/stick3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/stick3"
+                app:layout_constraintTop_toTopOf="@id/stick3" />
+
 
             <LinearLayout
                 android:id="@+id/stick2"
@@ -75,21 +86,23 @@
                 android:background="@drawable/line"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/guide_ver2"
-                app:layout_constraintStart_toStartOf="@+id/guide_ver2"
+                app:layout_constraintEnd_toStartOf="@+id/item3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/item2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/stick3"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:alpha="0.9"
-                android:background="@drawable/line"
+                android:id="@+id/stick7"
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/line_white"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@id/guide_ver3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guide_ver3" />
+                app:layout_constraintBottom_toBottomOf="@id/stick2"
+                app:layout_constraintEnd_toEndOf="@id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/stick2"
+                app:layout_constraintTop_toTopOf="@id/stick2" />
 
             <LinearLayout
                 android:id="@+id/stick4"
@@ -98,20 +111,56 @@
                 android:alpha="0.9"
                 android:background="@drawable/line"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@id/guide_ver4"
+                app:layout_constraintBottom_toTopOf="@+id/item7"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guide_ver4">
+                app:layout_constraintTop_toBottomOf="@+id/item4" />
 
-            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/stick8"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/line_white"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/stick4"
+                app:layout_constraintEnd_toEndOf="@id/stick4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/stick4"
+                app:layout_constraintTop_toTopOf="@id/stick4" />
+
+
+            <ImageView
+                android:id="@+id/item1n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/white_box" />
 
             <ImageView
                 android:id="@+id/item1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick3"
-                app:layout_constraintEnd_toStartOf="@id/stick1"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item2n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/white_box" />
 
@@ -119,9 +168,21 @@
                 android:id="@+id/item2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick3"
-                app:layout_constraintEnd_toStartOf="@id/stick2"
-                app:layout_constraintStart_toEndOf="@id/stick1"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item3n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/white_box" />
 
@@ -129,40 +190,88 @@
                 android:id="@+id/item3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick3"
+                app:layout_constraintBottom_toTopOf="@+id/stick3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
                 app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item4n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
                 android:id="@+id/item4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick4"
-                app:layout_constraintEnd_toStartOf="@id/stick1"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stick3"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item5n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
                 android:id="@+id/item5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick4"
-                app:layout_constraintEnd_toStartOf="@id/stick2"
-                app:layout_constraintStart_toEndOf="@id/stick1"
-                app:layout_constraintTop_toBottomOf="@id/stick3"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item6n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
                 android:id="@+id/item6"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/stick4"
+                app:layout_constraintBottom_toTopOf="@+id/stick4"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/stick2"
-                app:layout_constraintTop_toBottomOf="@id/stick3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
+                app:layout_constraintTop_toBottomOf="@+id/stick3"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item7n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
@@ -170,9 +279,21 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/stick1"
+                app:layout_constraintEnd_toStartOf="@+id/stick1"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stick4"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item8n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
@@ -180,9 +301,21 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/stick2"
-                app:layout_constraintStart_toEndOf="@id/stick1"
-                app:layout_constraintTop_toBottomOf="@id/stick4"
+                app:layout_constraintEnd_toStartOf="@+id/stick2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick1"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
+                app:srcCompat="@drawable/white_box" />
+
+            <ImageView
+                android:id="@+id/item9n"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
                 app:srcCompat="@drawable/white_box" />
 
             <ImageView
@@ -191,8 +324,9 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/stick2"
-                app:layout_constraintTop_toBottomOf="@id/stick4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/stick2"
+                app:layout_constraintTop_toBottomOf="@+id/stick4"
                 app:srcCompat="@drawable/white_box" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -204,12 +338,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:transitionName="t2"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/nonBack"
         app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/guide_ver5"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -227,12 +362,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:transitionName="t1"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/nonBack"
         app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guide_ver6"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
@@ -254,17 +390,32 @@
         android:elevation="0dp"
         app:icon="@drawable/ic_baseline_refresh"
         app:iconPadding="0dp"
-        app:iconTint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <Button
+        android:id="@+id/swap_btn"
+        style="@android:style/Widget.Holo.MediaRouteButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:elevation="0dp"
+        app:icon="@drawable/ic_baseline_sync_alt"
+        app:iconPadding="0dp"
+        app:layout_constraintTop_toTopOf="@id/refresh_btn"
+        app:layout_constraintStart_toEndOf="@id/refresh_btn"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/x_winner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alatsi"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:shadowColor="#FFC107"
+        android:shadowRadius="40"
         android:text="Winner !!!!"
-        android:textColor="#FFC107"
+        android:textColor="#FFEFBE"
         android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -279,8 +430,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alatsi"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:shadowColor="#FFC107"
+        android:shadowRadius="40"
         android:text="Winner !!!!"
-        android:textColor="#FFC107"
+        android:textColor="#FFEFBE"
         android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -303,6 +458,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.33" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:shadowColor="#FFEB3B"
+        android:shadowRadius="3"
+        android:text="Yogesh"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

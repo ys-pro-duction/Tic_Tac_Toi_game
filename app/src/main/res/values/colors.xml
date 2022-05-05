@@ -7,7 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="player_back">#FFFACC</color>
+    <color name="o_player_back">#3D7C99</color>
+    <color name="x_player_back">#993D3D</color>
     <color name="whitee">#ffffff</color>
-    <color name="nonBack">#F2F2F2</color>
+    <color name="nonBack">#2A0066</color>
 </resources>
