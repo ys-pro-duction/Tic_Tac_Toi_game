@@ -1,0 +1,9 @@
+{
+  "ads": true,
+  "testAd": true,
+  "autoC": false,
+  "adsT": "5000",
+  "autoCT":"20000",
+  "GID": "4780010",
+  "IAID": "Interstitial_Android"
+}

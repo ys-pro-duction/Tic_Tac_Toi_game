@@ -23,6 +23,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:id="@+id/parent"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -415,7 +416,7 @@
         android:shadowColor="#FFC107"
         android:shadowRadius="40"
         android:text="Winner !!!!"
-        android:textColor="#FFEFBE"
+        android:textColor="#FFF9E5"
         android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -435,7 +436,7 @@
         android:shadowColor="#FFC107"
         android:shadowRadius="40"
         android:text="Winner !!!!"
-        android:textColor="#FFEFBE"
+        android:textColor="#FFF9E5"
         android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -468,6 +469,7 @@
         android:shadowColor="#FFEB3B"
         android:shadowRadius="3"
         android:text="Yogesh"
+        android:transitionName="y_name"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
