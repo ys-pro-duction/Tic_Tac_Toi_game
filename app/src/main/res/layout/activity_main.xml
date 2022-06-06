@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainConstrain"
     android:background="#1C0042"
     tools:context=".MainActivity">
 
@@ -22,8 +23,8 @@
         app:layout_constraintTop_toBottomOf="@+id/oo_player">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -34,9 +35,9 @@
                 android:background="@drawable/line"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/item2"
+                app:layout_constraintEnd_toStartOf="@+id/item2n"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/item1"
+                app:layout_constraintStart_toEndOf="@+id/item1n"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
@@ -59,11 +60,11 @@
                 android:alpha="0.9"
                 android:background="@drawable/line"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/item4"
+                app:layout_constraintBottom_toTopOf="@+id/item4n"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item1" />
+                app:layout_constraintTop_toBottomOf="@+id/item1n" />
 
             <LinearLayout
                 android:id="@+id/stick6"
@@ -87,9 +88,9 @@
                 android:background="@drawable/line"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/item3"
+                app:layout_constraintEnd_toStartOf="@+id/item3n"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/item2"
+                app:layout_constraintStart_toEndOf="@+id/item2n"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
@@ -112,11 +113,11 @@
                 android:alpha="0.9"
                 android:background="@drawable/line"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/item7"
+                app:layout_constraintBottom_toTopOf="@+id/item7n"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item4" />
+                app:layout_constraintTop_toBottomOf="@+id/item4n" />
 
             <LinearLayout
                 android:id="@+id/stick8"
@@ -132,203 +133,194 @@
                 app:layout_constraintTop_toTopOf="@id/stick4" />
 
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item1n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick3"
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-                android:id="@+id/item1"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick3"
-                app:layout_constraintEnd_toStartOf="@+id/stick1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item2n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick3"
                 app:layout_constraintEnd_toStartOf="@+id/stick2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-                android:id="@+id/item2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick3"
-                app:layout_constraintEnd_toStartOf="@+id/stick2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item3n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-                android:id="@+id/item3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item4n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick4"
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick3" >
 
-            <ImageView
-                android:id="@+id/item4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick4"
-                app:layout_constraintEnd_toStartOf="@+id/stick1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item5n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick4"
                 app:layout_constraintEnd_toStartOf="@+id/stick2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick3" >
 
-            <ImageView
-                android:id="@+id/item5"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick4"
-                app:layout_constraintEnd_toStartOf="@+id/stick2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item6n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/stick4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick3" >
 
-            <ImageView
-                android:id="@+id/item6"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/stick4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toBottomOf="@+id/stick3"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item7n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick4" >
 
-            <ImageView
-                android:id="@+id/item7"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stick1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item8n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/stick2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick4">
 
-            <ImageView
-                android:id="@+id/item8"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stick2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item9n"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:cardBackgroundColor="#3B006B"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                app:layout_constraintTop_toBottomOf="@+id/stick4">
 
-            <ImageView
-                android:id="@+id/item9"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toBottomOf="@+id/stick4"
-                app:srcCompat="@drawable/white_box" />
+                <ImageView
+                    android:id="@+id/item9"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/transperent_back" />
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -339,7 +331,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:transitionName="t2"
-        app:cardBackgroundColor="@color/nonBack"
+        app:cardBackgroundColor="#2A0066"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
@@ -348,6 +340,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/o_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/o_player_back"
+            android:visibility="invisible">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -363,7 +364,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:transitionName="t1"
-        app:cardBackgroundColor="@color/nonBack"
+        app:cardBackgroundColor="#2A0066"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -372,6 +373,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guide_ver6"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/x_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/x_player_back"
+            android:visibility="invisible">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -477,6 +487,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/online_btn"
+        style="@android:style/Widget.Holo.MediaRouteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_baseline_online"
+        app:iconPadding="10dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
