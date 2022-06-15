@@ -10,7 +10,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="0dp"
         app:cardBackgroundColor="#000000"
         app:cardCornerRadius="10dp"
@@ -143,7 +143,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/item1"
@@ -164,7 +164,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stick2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/item2"
@@ -185,7 +185,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/item3"
@@ -206,7 +206,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick3" >
+                app:layout_constraintTop_toBottomOf="@+id/stick3">
 
                 <ImageView
                     android:id="@+id/item4"
@@ -227,7 +227,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stick2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick1"
-                app:layout_constraintTop_toBottomOf="@+id/stick3" >
+                app:layout_constraintTop_toBottomOf="@+id/stick3">
 
                 <ImageView
                     android:id="@+id/item5"
@@ -248,7 +248,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/stick2"
-                app:layout_constraintTop_toBottomOf="@+id/stick3" >
+                app:layout_constraintTop_toBottomOf="@+id/stick3">
 
                 <ImageView
                     android:id="@+id/item6"
@@ -269,7 +269,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stick1"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stick4" >
+                app:layout_constraintTop_toBottomOf="@+id/stick4">
 
                 <ImageView
                     android:id="@+id/item7"
@@ -351,11 +351,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/o_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:src="@drawable/oo" />
+            app:srcCompat="@drawable/oo"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -384,16 +385,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/x_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:src="@drawable/xx" />
+            app:srcCompat="@drawable/xx" />
 
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/refresh_btn"
+        android:id="@+id/reset_btn"
         style="@android:style/Widget.Holo.MediaRouteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -412,8 +414,8 @@
         android:elevation="0dp"
         app:icon="@drawable/ic_baseline_sync_alt"
         app:iconPadding="0dp"
-        app:layout_constraintTop_toTopOf="@id/refresh_btn"
-        app:layout_constraintStart_toEndOf="@id/refresh_btn"
+        app:layout_constraintTop_toTopOf="@id/reset_btn"
+        app:layout_constraintStart_toEndOf="@id/reset_btn"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
@@ -423,7 +425,7 @@
         android:fontFamily="@font/alatsi"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
-        android:shadowColor="#FFC107"
+        android:shadowColor="@color/winner_text_shadow"
         android:shadowRadius="40"
         android:text="Winner !!!!"
         android:textColor="#FFF9E5"
@@ -443,7 +445,7 @@
         android:fontFamily="@font/alatsi"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
-        android:shadowColor="#FFC107"
+        android:shadowColor="@color/winner_text_shadow"
         android:shadowRadius="40"
         android:text="Winner !!!!"
         android:textColor="#FFF9E5"
@@ -496,6 +498,18 @@
         android:layout_height="wrap_content"
         app:icon="@drawable/ic_baseline_online"
         app:iconPadding="10dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/exit_online_btn"
+        style="@android:style/Widget.Holo.MediaRouteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_baseline_exit_"
+        app:iconPadding="10dp"
+        android:visibility="gone"
         app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

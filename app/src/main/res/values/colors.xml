@@ -12,4 +12,5 @@
     <color name="whitee">#ffffff</color>
     <color name="nonBack">#2A0066</color>
     <color name="sample">#2A0066</color>
+    <color name="winner_text_shadow">#FFC107</color>
 </resources>
