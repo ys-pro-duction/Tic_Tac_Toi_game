@@ -1,6 +1,7 @@
 package com.ys_production.tictactoi;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -39,16 +40,17 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity implements Uads, Online_game_controller.Online_game, Online_game_controller.Online_game.Position_logic {
     private static final String TAG = "MainActivity";
     CardView xx_player, oo_player;
-    String[] win_position = {"123", "231", "321", "132", "213", "312",
-            "789", "798", "879", "897", "978", "987",
-            "147", "174", "417", "471", "741", "714",
-            "258", "285", "528", "582", "852", "825",
-            "456", "465", "546", "564", "645", "654",
-            "369", "396", "693", "639", "963", "936",
-            "159", "195", "519", "591", "915", "951",
-            "357", "375", "537", "573", "753", "735"};
+    String[] win_position = {"012", "120", "210", "021", "102", "201", "678", "687", "768", "786", "867", "876", "036", "063", "306", "360", "630", "603", "147", "174", "417", "471", "741", "714", "345", "354", "435", "453", "534", "543", "258", "285", "582", "528", "852", "825", "048", "084", "408", "480", "804", "840", "246", "264", "426", "462", "642", "624,"};
+    //    String[] win_position = {"123", "231", "321", "132", "213", "312",
+//            "789", "798", "879", "897", "978", "987",
+//            "147", "174", "417", "471", "741", "714",
+//            "258", "285", "528", "582", "852", "825",
+//            "456", "465", "546", "564", "645", "654",
+//            "369", "396", "693", "639", "963", "936",
+//            "159", "195", "519", "591", "915", "951",
+//            "357", "375", "537", "573", "753", "735"};
     TextView o_wint_txt, x_wint_txt;
-    private String InterstitialID, winner_postion = null;
+    private String InterstitialID, winner_postion = null, oldO, oldX;
     private boolean AC, adisRunning = false, gameStatus = true;
     private int player_state = 0, AdT = 60000, ACT = 40000, loadTime = 0, resetGameAnimation = 2;
     private ArrayList<String> win_code_array;
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     private boolean myTurn = false;
     private Position_logic position_logic;
     private boolean winnerHasSet = false;
+    private DatabaseReference myRef;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +80,15 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         position_logic = this;
         xx_player = findViewById(R.id.xx_player);
         oo_player = findViewById(R.id.oo_player);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.liquid_bubble);
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.liquid_bubble);
         View.OnClickListener itemclick = v -> {
             if (gameStatus) {
+                bubbleSound();
                 if (isOnline) {
                     itemClick_online(v);
                 } else {
-                    new Thread(() -> {
-                        if (mediaPlayer.isPlaying()) {
-                            mediaPlayer.pause();
-                            mediaPlayer.seekTo(0);
-                        }
-                        mediaPlayer.start();
-                    }).start();
                     ImageView imageView = (ImageView) v;
-                    int a = viewList.indexOf(findViewById(v.getId())) + 1;
+                    int a = viewList.indexOf(findViewById(v.getId()));
                     if (imageView.getTag().equals("w")) {
                         if (player_state == 0) {
                             oo_point.append(a);
@@ -188,8 +186,15 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                 pd = new ProgressDialog(this);
                 pd.setMessage("Please wait...");
                 pd.create();
+                findViewById(R.id.exit_online_btn).setOnClickListener(v -> {
+                    AlertDialog.Builder exit_online_dialog = new AlertDialog.Builder(this);
+                    exit_online_dialog.setTitle("Exit online");
+                    exit_online_dialog.setMessage("Do you want to exit online game?");
+                    exit_online_dialog.setCancelable(true);
+                    exit_online_dialog.setPositiveButton("Yes", (dialog, which) ->
+                            set_enviorment_OFFLINE()).setNegativeButton("No", (dialog, which) -> dialog.dismiss()).create().show();
+                });
             });
-            ((Button) findViewById(R.id.exit_online_btn)).setOnClickListener(v -> set_enviorment_OFFLINE());
         }).start();
         findViewById(R.id.reset_btn).setOnClickListener(v -> reset_Game());
         findViewById(R.id.swap_btn).setOnClickListener(v -> state_logic());
@@ -272,10 +277,21 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         });
     }
 
+    private void bubbleSound() {
+        new Thread(() -> {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            }
+            mediaPlayer.start();
+        }).start();
+    }
+
+
     private void itemClick_online(View v) {
         if (myTurn) {
             if (((ImageView) v).getTag().equals("w")) {
-                DatabaseReference reference = database.getReference("Game/" + gameCode);
+                DatabaseReference reference = database.getReference("Game").child(gameCode).child("move");// + gameCode+"/move");
 //                if (xx_player.getVisibility() == View.VISIBLE){
                 reference.child(String.valueOf(viewList.indexOf(v))).setValue(player_state);
 //                }else{
@@ -298,6 +314,8 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             o_wint_txt.startAnimation(left_to_frontt);
             o_wint_txt.setVisibility(View.VISIBLE);
         } else if (winner_postion.equals(String.valueOf(xx_point))) {
+            x_wint_txt.setText("Winner!!!!");
+            x_wint_txt.setShadowLayer(40, 0, 0, getResources().getColor(R.color.winner_text_shadow));
             x_wint_txt.startAnimation(right_to_frontt);
             x_wint_txt.setVisibility(View.VISIBLE);
 
@@ -321,19 +339,22 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     }
 
     public boolean win_logic(String player) {
-//        boolean status = false;//
         for (int i = 0; i < win_code_array.size(); i++) {
+            Log.d(TAG, "win_logic start: ========================================");
             int truecount = 0;
             for (int j = 0; j < player.length(); j++) {
                 if (win_code_array.get(i).contains(String.valueOf(player.charAt(j)))) {
                     truecount++;
+                    Log.d(TAG, "win_logic player:" + player + " i = " + i + " , j = " + j + " truecount = " + truecount);
                 }
             }
             if (truecount == 3) {
                 winner_postion = player;
+                Log.d(TAG, "win_logic end true: ========================================");
                 return true;
             }
         }
+        Log.d(TAG, "win_logic end false: ========================================");
         return false;
     }
 
@@ -351,7 +372,20 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     }
 
     public void reset_Game() {
-        player_state = 1;
+        Log.d(TAG, "reset_Game: START");
+        if (isOnline) {
+            if (!joining_game) {
+                myRef.child(gameCode).child("move").setValue("");
+                myRef.child(gameCode).child("move").child("reset").setValue(true);
+                myRef.child(gameCode).child("move").child("oo").setValue(false);
+            } else {
+                myRef.child(gameCode).child("move").child("reset").setValue(false);
+            }
+        }else {
+            state_logic();
+        }
+        winnerHasSet = false;
+//        player_state = 1;
         oo_point = new StringBuilder();
         xx_point = new StringBuilder();
         setTags_toImages();
@@ -421,8 +455,8 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
 //                , ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, Pair.create(item3, "t1"), Pair.create(item7, "t2")).toBundle()
 //        );
 //        finish();
-        state_logic();
         gameStatus = true;
+
     }
 
     private void loadIntstitialAD() {
@@ -505,13 +539,6 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     }
 
     void setOnline() {
-//        CardView constraintLayout = findViewById(R.id.materialCardView);
-//        CardView cardView = (CardView) getLayoutInflater().inflate(R.layout.online_chooser
-//                ,constraintLayout,false);
-//
-//        constraintLayout.addView(cardView,1);
-//        Button close_btn = findViewById(R.id.close_alert_btn);
-//        close_btn.setOnClickListener(v -> constraintLayout.removeView(cardView));
         View view = getLayoutInflater().inflate(R.layout.online_chooser, null);
         creat_join_dialog = new AlertDialog.Builder(MainActivity.this).create();
         creat_join_dialog.setCancelable(true);
@@ -521,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         view.findViewById(R.id.create_server_btn).setOnClickListener(v -> {
             joining_game = false;
             code = ((EditText) view.findViewById(R.id.code_editText)).getText();
-            if (code != null) {
+            if (String.valueOf(code).length() > 0) {
                 pdShow();
                 Online_game_controller onlineGameController = new Online_game_controller(MainActivity.this);
                 onlineGameController.checkGameExist(code.toString());
@@ -530,7 +557,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         view.findViewById(R.id.join_server_btn).setOnClickListener(v -> {
             joining_game = true;
             code = ((EditText) view.findViewById(R.id.code_editText)).getText();
-            if (code != null) {
+            if (String.valueOf(code).length() > 0) {
                 pdShow();
                 Online_game_controller onlineGameController = new Online_game_controller(MainActivity.this);
                 onlineGameController.checkGameExist(code.toString());
@@ -558,90 +585,85 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
 
     @Override
     public void resultGameExist(boolean exist) {
+        gameCode = code.toString();
         Log.d(TAG, "resultGameExist: " + exist);
-        DatabaseReference myRef = database.getReference("Game");
+        myRef = database.getReference("Game");
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                StringBuilder tempO = new StringBuilder();
-                StringBuilder tempX = new StringBuilder();
-                ImageView imageView;
-                for (int i = 0; i < 9; i++) {
-                    if (snapshot.hasChild(String.valueOf(i))) {
-                        imageView = (ImageView) viewList.get(i);
-                        if (snapshot.child(String.valueOf(i)).getValue(Integer.class).equals(0)) {
-                            imageView.setImageResource(R.drawable.oo);
-                            imageView.setTag("o");
-                            tempO.append(i);
-//                            if (!tempO.toString().equals(oo_point.toString())) {
-//                                Log.d(TAG, "onDataChange !tempO.toString().equals(oo_point.toString()): TRUE O:"+oo_point.toString());
-//                                oo_point.append(i);
-//                                if (oo_point.toString().length() >= 3) {
-//                                    if (win_logic(oo_point.toString())) {
-//                                        Log.d(TAG, "onDataChange win_logic(oo_point.toString()): TRUE O:"+oo_point.toString());
-//                                        myRef.child(gameCode).child("winner").setValue(0);
-//                                        setWinner_online(0);
-//                                    }
-//                                }
-//                            }
-                        } else {
-                            imageView.setImageResource(R.drawable.xx);
-                            imageView.setTag("x");
-                            tempX.append(i);
-//                            if (!tempX.toString().equals(xx_point.toString())) {
-//                                Log.d(TAG, "onDataChange !tempX.toString().equals(xx_point.toString()): TRUE X:"+xx_point.toString());
-//                                xx_point.append(i);
-//                                if (xx_point.toString().length() >= 3) {
-//                                    if (win_logic(xx_point.toString())) {
-//                                        Log.d(TAG, "onDataChange win_logic(xx_point.toString()): TRUE X:"+xx_point.toString());
-//                                        myRef.child(gameCode).child("winner").setValue(1);
-//                                        setWinner_online(1);
-//                                    }
-//                                }
-//                            }
+                if (isOnline) {
+                    StringBuilder tempO = new StringBuilder();
+                    StringBuilder tempX = new StringBuilder();
+                    ImageView imageView;
+                    if (snapshot.child("move").hasChild("reset")) if (joining_game)
+                        if (snapshot.child("move").child("reset").getValue(Boolean.class)) {
+                            reset_Game();
+                        }
+                    for (int i = 0; i < 9; i++) {
+                        if (snapshot.child("move").hasChild(String.valueOf(i))) {
+                            imageView = (ImageView) viewList.get(i);
+                            if (snapshot.child("move").child(String.valueOf(i)).getValue(Integer.class).equals(0)) {
+                                imageView.setImageResource(R.drawable.oo);
+                                imageView.setTag("o");
+                                tempO.append(i);
+                            } else {
+                                imageView.setImageResource(R.drawable.xx);
+                                imageView.setTag("x");
+                                tempX.append(i);
+                            }
                         }
                     }
-                }
-                if (!tempO.toString().equals(oo_point.toString())) {
-                    Log.d(TAG, "onDataChange !tempO.toString().equals(oo_point.toString()): TRUE O:" + oo_point.toString());
+                    if (!tempO.toString().equals(oo_point.toString())) {
+                        if (!joining_game) {
+                            bubbleSound();
+                        }
+                        Log.d(TAG, "onDataChange !tempO.toString().equals(oo_point.toString()): TRUE O:" + tempO.toString());
 //                    oo_point.append(i);
-                    oo_point = tempO;
-                    if (oo_point.toString().length() >= 3) {
-                        if (win_logic(oo_point.toString())) {
-                            Log.d(TAG, "onDataChange win_logic(oo_point.toString()): TRUE O:" + oo_point.toString());
-                            myRef.child(gameCode).child("winner").setValue(0);
-                            setWinner_online(0);
+                        oo_point = tempO;
+                        if (oo_point.toString().length() >= 3) {
+                            if (win_logic(oo_point.toString())) {
+                                Log.d(TAG, "onDataChange win_logic(oo_point.toString()): TRUE O:" + tempO.toString());
+                                myRef.child(gameCode).child("move").child("winner").setValue(0);
+                                setWinner_online(0);
+                            }
                         }
                     }
-                }
-                if (!tempX.toString().equals(xx_point.toString())) {
-                    Log.d(TAG, "onDataChange !tempX.toString().equals(xx_point.toString()): TRUE X:" + xx_point.toString());
+                    if (!tempX.toString().equals(xx_point.toString())) {
+                        if (joining_game) {
+                            bubbleSound();
+                        }
+                        Log.d(TAG, "onDataChange !tempX.toString().equals(xx_point.toString()): TRUE X:" + tempX.toString());
 //                    xx_point.append(i);
-                    xx_point = tempX;
-                    if (xx_point.toString().length() >= 3) {
-                        if (win_logic(xx_point.toString())) {
-                            Log.d(TAG, "onDataChange win_logic(xx_point.toString()): TRUE X:" + xx_point.toString());
-                            myRef.child(gameCode).child("winner").setValue(1);
-                            setWinner_online(1);
+                        xx_point = tempX;
+                        if (xx_point.toString().length() >= 3) {
+                            if (win_logic(xx_point.toString())) {
+                                Log.d(TAG, "onDataChange win_logic(xx_point.toString()): TRUE X:" + tempX.toString());
+                                myRef.child(gameCode).child("move").child("winner").setValue(1);
+                                setWinner_online(1);
+                            }
                         }
                     }
-                }
-                if (joining_game) {
-                    if (snapshot.child("oo").getValue(Boolean.class)) {
-                        myTurn = true;
-                        position_logic.setPosition(0);
+                    if (snapshot.child("move").hasChild("oo")) {
+                        if (joining_game) {
+                            if (snapshot.child("move").child("oo").getValue(Boolean.class)) {
+                                Log.d(TAG, "OOOOOOO : TRUE ");
+                                myTurn = true;
+                                position_logic.setPosition(0);
 
-                    } else {
-                        myTurn = false;
-                        position_logic.setPosition(1);
-                    }
-                } else {
-                    if (!snapshot.child("oo").getValue(Boolean.class)) {
-                        myTurn = true;
-                        position_logic.setPosition(2);
-                    } else {
-                        myTurn = false;
-                        position_logic.setPosition(3);
+                            } else {
+                                myTurn = false;
+                                position_logic.setPosition(1);
+                            }
+                        } else {
+                            if (!snapshot.child("move").child("oo").getValue(Boolean.class)) {
+                                Log.d(TAG, "XXXXXXX : TRUE ");
+                                myTurn = true;
+                                position_logic.setPosition(2);
+                            } else {
+                                myTurn = false;
+                                position_logic.setPosition(3);
+                            }
+                        }
                     }
                 }
             }
@@ -656,18 +678,18 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                     if (winner == 0) {
                         if (joining_game) {
                             x_wint_txt.setShadowLayer(40, 0, 0, getResources().getColor(R.color.winner_text_shadow));
-                            x_wint_txt.setText("Winner!!");
+                            x_wint_txt.setText("Winner!!!!");
                         } else {
                             x_wint_txt.setShadowLayer(40, 0, 0, getResources().getColor(R.color.x_player_back));
-                            x_wint_txt.setText("Looser!!");
+                            x_wint_txt.setText("Looser!!!!");
                         }
                     } else {
                         if (joining_game) {
                             x_wint_txt.setShadowLayer(40, 0, 0, getResources().getColor(R.color.x_player_back));
-                            x_wint_txt.setText("Looser!!");
+                            x_wint_txt.setText("Looser!!!!");
                         } else {
                             x_wint_txt.setShadowLayer(40, 0, 0, getResources().getColor(R.color.winner_text_shadow));
-                            x_wint_txt.setText("Winner!!");
+                            x_wint_txt.setText("Winner!!!!");
                         }
                     }
 
@@ -682,81 +704,60 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             }
         };
         if (joining_game) {
-            Log.d(TAG, "resultGameExist: joining_game " + true);
             if (exist) {
-                set_enviorment_ONLINE();
-                ((ImageView) findViewById(R.id.x_image)).setVisibility(View.GONE);
-                ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.o_player_back));
-                Log.d(TAG, "resultGameExist: exist " + true);
-//                myRef.child(code.toString()).setValue("").addOnCompleteListener(task -> {
-                gameCode = code.toString();
-                DatabaseReference moves = myRef.child(code.toString());
-                moves.addValueEventListener(valueEventListener);
+                myRef.child(gameCode).addValueEventListener(valueEventListener);
                 player_state = 1;
-                state_logic();
+                set_enviorment_ONLINE();
                 creat_join_dialog.dismiss();
-                pdDismiss();
             } else {
-                Log.d(TAG, "resultGameExist: exist " + exist);
                 Toast.makeText(MainActivity.this, "Game does not exist", Toast.LENGTH_SHORT).show();
             }
-            pdDismiss();
         } else {
-            Log.d(TAG, "resultGameExist: joining_game " + joining_game);
             if (exist) {
-                Log.d(TAG, "resultGameExist: exist " + true);
-                pdDismiss();
                 Toast.makeText(MainActivity.this, "Code already used", Toast.LENGTH_SHORT).show();
             } else {
-                Log.d(TAG, "resultGameExist: exist " + exist);
-                gameCode = code.toString();
-                myRef.child(code.toString()).child("oo").setValue(false).addOnCompleteListener(task -> {
-                    player_state = 0;
-                    DatabaseReference moves = myRef.child(code.toString());
-                    moves.addValueEventListener(valueEventListener);
+                myRef.child(gameCode).child("move").child("oo").setValue(false).addOnCompleteListener(task -> {
+                    myRef.child(gameCode).addValueEventListener(valueEventListener);
                 });
+                player_state = 0;
+                set_enviorment_ONLINE();
                 creat_join_dialog.dismiss();
-                pdDismiss();
             }
         }
+        pdDismiss();
     }
 
     void set_enviorment_ONLINE() {
-        isOnline = true;
-        ((Button) findViewById(R.id.swap_btn)).setVisibility(View.GONE);
+        if (joining_game) {
+            ((Button) findViewById(R.id.reset_btn)).setVisibility(View.GONE);
+            ((ImageView) findViewById(R.id.x_image)).setImageResource(R.drawable.oo);
+            ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.o_player_back));
+        }
         reset_Game();
+        isOnline = true;
+        findViewById(R.id.swap_btn).setVisibility(View.GONE);
         oo_player.setVisibility(View.INVISIBLE);
-        ((Button) findViewById(R.id.online_btn)).setVisibility(View.GONE);
-        ((Button) findViewById(R.id.exit_online_btn)).setVisibility(View.VISIBLE);
+        findViewById(R.id.online_btn).setVisibility(View.GONE);
+        findViewById(R.id.exit_online_btn).setVisibility(View.VISIBLE);
     }
 
     void set_enviorment_OFFLINE() {
+        myRef.removeEventListener(valueEventListener);
+        player_state = 0;
         isOnline = false;
-        ((Button) findViewById(R.id.swap_btn)).setVisibility(View.VISIBLE);
         reset_Game();
+        if (joining_game) {
+            ((Button) findViewById(R.id.reset_btn)).setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.x_image)).setImageResource(R.drawable.xx);
+            ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.x_player_back));
+        }else{
+            myRef.child(gameCode).removeValue();
+        }
+        findViewById(R.id.swap_btn).setVisibility(View.VISIBLE);
         oo_player.setVisibility(View.VISIBLE);
-        ((Button) findViewById(R.id.online_btn)).setVisibility(View.VISIBLE);
-        ((Button) findViewById(R.id.exit_online_btn)).setVisibility(View.GONE);
+        findViewById(R.id.online_btn).setVisibility(View.VISIBLE);
+        findViewById(R.id.exit_online_btn).setVisibility(View.GONE);
     }
-
-//    private boolean win_logic_Online(String positions) {
-////        String ooo = oo_point.toString();
-////        String xxx = xx_point.toString();
-//        if (positions.length() < 3){
-//            for (int i = 0; i < win_code_array.size(); i++) {
-//                int truecount = 0;
-//                for (int j = 0; j < oo_point.length(); j++) {
-//                    if (win_code_array.get(i).contains(String.valueOf(position.charAt(j)))) {
-//                        truecount++;
-//                    }
-//                }
-//                if (truecount >= 3) {
-//                    winner_postion = positions;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public void setPosition(int position) {
@@ -774,22 +775,5 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             ((ConstraintLayout) findViewById(R.id.x_back)).setVisibility(View.INVISIBLE);
             player_state = 0;
         }
-
-//        else{
-//            ((ConstraintLayout) findViewById(R.id.x_back)).setVisibility(View.VISIBLE);
-//            ((ConstraintLayout) findViewById(R.id.o_back)).setVisibility(View.INVISIBLE);
-//            player_state = false;
-//        }
     }
 }
-
-
-//    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this,"12")
-//            .setSmallIcon(R.drawable.oxox_logo)
-//            .setContentTitle("My notification")
-//            .setContentText("Much longer text that cannot fit one line...")
-//            .setStyle(new NotificationCompat.BigTextStyle()
-//                    .bigText("Much longer text that cannot fit one line..."))
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
-//                    notificationManager.notify(2, builder.build());
