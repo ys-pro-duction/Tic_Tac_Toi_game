@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     private boolean winnerHasSet = false;
     private DatabaseReference myRef;
     private MediaPlayer mediaPlayer;
+    private Button swap_btnn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +198,11 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             });
         }).start();
         findViewById(R.id.reset_btn).setOnClickListener(v -> reset_Game());
-        findViewById(R.id.swap_btn).setOnClickListener(v -> state_logic());
+        swap_btnn = findViewById(R.id.swap_btn);
+        swap_btnn.setOnClickListener(v -> {
+            if (isOnline) swap_btn_ONLINE();
+            else state_logic();
+        });
         findViewById(R.id.online_btn).setOnClickListener(v -> ask_play_online.create().show());
         left_to_frontt = AnimationUtils.loadAnimation(MainActivity.this, R.anim.left_to_front);
         right_to_frontt = AnimationUtils.loadAnimation(MainActivity.this, R.anim.right_to_front);
@@ -275,6 +280,11 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                 Log.d(TAG, "onCancelled: start");
             }
         });
+    }
+
+    private void swap_btn_ONLINE() {
+        database.getReference("Game").child(gameCode).child("move").child("oo").setValue(!joining_game);
+        swap_btnn.setVisibility(View.GONE);
     }
 
     private void bubbleSound() {
@@ -383,6 +393,9 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             }
         }else {
             state_logic();
+        }
+        if (!joining_game){
+            swap_btnn.setVisibility(View.VISIBLE);
         }
         winnerHasSet = false;
 //        player_state = 1;
@@ -564,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             }
         });
         view.findViewById(R.id.close_alert_btn).setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "Close click", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "Close click", Toast.LENGTH_SHORT).show();
             creat_join_dialog.dismiss();
         });
 
@@ -655,6 +668,11 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                                 position_logic.setPosition(1);
                             }
                         } else {
+                            if (!tempX.toString().isEmpty() || !tempO.toString().isEmpty()){
+                                if (swap_btnn.getVisibility() == View.VISIBLE){
+                                    swap_btnn.setVisibility(View.GONE);
+                                }
+                            }
                             if (!snapshot.child("move").child("oo").getValue(Boolean.class)) {
                                 Log.d(TAG, "XXXXXXX : TRUE ");
                                 myTurn = true;
@@ -730,12 +748,12 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     void set_enviorment_ONLINE() {
         if (joining_game) {
             ((Button) findViewById(R.id.reset_btn)).setVisibility(View.GONE);
+            swap_btnn.setVisibility(View.GONE);
             ((ImageView) findViewById(R.id.x_image)).setImageResource(R.drawable.oo);
             ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.o_player_back));
         }
         reset_Game();
         isOnline = true;
-        findViewById(R.id.swap_btn).setVisibility(View.GONE);
         oo_player.setVisibility(View.INVISIBLE);
         findViewById(R.id.online_btn).setVisibility(View.GONE);
         findViewById(R.id.exit_online_btn).setVisibility(View.VISIBLE);
@@ -753,7 +771,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         }else{
             myRef.child(gameCode).removeValue();
         }
-        findViewById(R.id.swap_btn).setVisibility(View.VISIBLE);
+        swap_btnn.setVisibility(View.VISIBLE);
         oo_player.setVisibility(View.VISIBLE);
         findViewById(R.id.online_btn).setVisibility(View.VISIBLE);
         findViewById(R.id.exit_online_btn).setVisibility(View.GONE);
