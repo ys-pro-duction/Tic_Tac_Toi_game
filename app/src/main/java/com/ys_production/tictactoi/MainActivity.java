@@ -2,13 +2,16 @@ package com.ys_production.tictactoi;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,6 +37,8 @@ import com.unity3d.ads.IUnityAdsShowListener;
 import com.unity3d.ads.UnityAds;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -272,6 +277,8 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                     Log.d(TAG, "onDataChange: end");
                 } catch (NullPointerException nullPointerException) {
                     nullPointerException.printStackTrace();
+                }catch(IllegalArgumentException e){
+                    e.printStackTrace();
                 }
             }
 
@@ -280,6 +287,21 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                 Log.d(TAG, "onCancelled: start");
             }
         });
+        Intent launchIntent = getIntent();
+        ////////////////////////////////////////////////////////////
+        if (launchIntent.getAction().equals("com.google.intent.action.TEST_LOOP")) {
+            int scenario = launchIntent.getIntExtra("scenario", 0);
+            // Code to handle your game loop here
+//            long currentTime = System.currentTimeMillis();
+//            while (currentTime > System.currentTimeMillis() - 300000) {
+//
+//                if (String.valueOf(System.currentTimeMillis()).endsWith("000")) {
+                    Toast.makeText(MainActivity.this, String.valueOf(System.currentTimeMillis()), Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//            finish();
+        }
     }
 
     private void swap_btn_ONLINE() {
@@ -391,10 +413,10 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             } else {
                 myRef.child(gameCode).child("move").child("reset").setValue(false);
             }
-        }else {
+        } else {
             state_logic();
         }
-        if (!joining_game){
+        if (!joining_game) {
             swap_btnn.setVisibility(View.VISIBLE);
         }
         winnerHasSet = false;
@@ -532,13 +554,26 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     void closeAd() {
         if (AC) {
             new Handler().postDelayed(() -> {
+//                DisplayMetrics metrics = new DisplayMetrics();
+//                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//                int screenWidth = metrics.widthPixels;
                 try {
-                    Runtime.getRuntime().exec("input tap 1060 20");
-                    closeAd();
+                    Runtime.getRuntime().exec("input keyevent 4");
+//                    Runtime.getRuntime().exec("input tap " + (screenWidth - 20) + " 20");
+//                    Log.d(TAG, "closeAd: pixels" + (getWindowManager().getDefaultDisplay().getWidth() - 20) + " 20 " + screenWidth);
+//                    closeAd();
                 } catch (IOException e) {
-                    closeAd();
+//                    closeAd();
                     Log.d(TAG, "closeAd: " + e.getMessage());
                 }
+                Log.d(TAG, "closeAd: start");
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        onBackPressed();
+//                    }
+//                });
+
             }, ACT);
         }
     }
@@ -557,6 +592,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
         creat_join_dialog.setCancelable(true);
         creat_join_dialog.setView(view);
         creat_join_dialog.show();
+        reset_Game();
 
         view.findViewById(R.id.create_server_btn).setOnClickListener(v -> {
             joining_game = false;
@@ -668,8 +704,8 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                                 position_logic.setPosition(1);
                             }
                         } else {
-                            if (!tempX.toString().isEmpty() || !tempO.toString().isEmpty()){
-                                if (swap_btnn.getVisibility() == View.VISIBLE){
+                            if (!tempX.toString().isEmpty() || !tempO.toString().isEmpty()) {
+                                if (swap_btnn.getVisibility() == View.VISIBLE) {
                                     swap_btnn.setVisibility(View.GONE);
                                 }
                             }
@@ -752,7 +788,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             ((ImageView) findViewById(R.id.x_image)).setImageResource(R.drawable.oo);
             ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.o_player_back));
         }
-        reset_Game();
+//        reset_Game();
         isOnline = true;
         oo_player.setVisibility(View.INVISIBLE);
         findViewById(R.id.online_btn).setVisibility(View.GONE);
@@ -768,7 +804,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             ((Button) findViewById(R.id.reset_btn)).setVisibility(View.VISIBLE);
             ((ImageView) findViewById(R.id.x_image)).setImageResource(R.drawable.xx);
             ((ConstraintLayout) findViewById(R.id.x_back)).setBackgroundColor(getResources().getColor(R.color.x_player_back));
-        }else{
+        } else {
             myRef.child(gameCode).removeValue();
         }
         swap_btnn.setVisibility(View.VISIBLE);
