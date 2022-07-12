@@ -1,7 +1,6 @@
 package com.ys_production.tictactoi;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,9 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,9 +33,14 @@ import com.unity3d.ads.IUnityAdsLoadListener;
 import com.unity3d.ads.IUnityAdsShowListener;
 import com.unity3d.ads.UnityAds;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
     TextView o_wint_txt, x_wint_txt;
     private String InterstitialID, winner_postion = null, oldO, oldX;
     private boolean AC, adisRunning = false, gameStatus = true;
-    private int player_state = 0, AdT = 60000, ACT = 40000, loadTime = 0, resetGameAnimation = 2;
+    private int player_state = 0, AdT = 90000, ACT = 40000, loadTime = 0, resetGameAnimation = 2;
     private ArrayList<String> win_code_array;
     private View item1 = null, item2 = null, item3 = null, item4 = null, item5 = null, item6 = null, item7 = null, item8 = null, item9 = null;
     private StringBuilder oo_point, xx_point;
@@ -218,21 +220,21 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
                     Log.d(TAG, "onDataChange: start");
-                    InterstitialID = snapshot.child("IAID").getValue(String.class);
-                    if (snapshot.child("ads").getValue(Boolean.class)) {
-                        if (!adisRunning) {
-                            if (!UnityAds.isInitialized()) {
-                                UnityAds.initialize(MainActivity.this, snapshot.child("GID").getValue(String.class)
-                                        , snapshot.child("testAd").getValue(Boolean.class));
-                                adisRunning = true;
-                                new Handler().postDelayed(() -> loadIntstitialAD(), 5000);
-                            } else loadIntstitialAD();
-                        }
-                    } else adisRunning = false;
+//                    InterstitialID = snapshot.child("IAID").getValue(String.class);
+//                    if (snapshot.child("ads").getValue(Boolean.class)) {
+//                        if (!adisRunning) {
+//                            if (!UnityAds.isInitialized()) {
+//                                UnityAds.initialize(MainActivity.this, snapshot.child("GID").getValue(String.class)
+//                                        , snapshot.child("testAd").getValue(Boolean.class));
+//                                adisRunning = true;
+//                                new Handler().postDelayed(() -> loadIntstitialAD(), 5000);
+//                            } else loadIntstitialAD();
+//                        }
+//                    } else adisRunning = false;
                     resetGameAnimation = Integer.parseInt(snapshot.child("Ranim").getValue(String.class));
-                    AdT = Integer.parseInt(snapshot.child("adsT").getValue(String.class));
-                    AC = snapshot.child("autoC").getValue(Boolean.class);
-                    ACT = Integer.parseInt(snapshot.child("autoCT").getValue(String.class));
+//                    AdT = Integer.parseInt(snapshot.child("adsT").getValue(String.class));
+//                    AC = snapshot.child("autoC").getValue(Boolean.class);
+//                    ACT = Integer.parseInt(snapshot.child("autoCT").getValue(String.class));
                     String top_name = snapshot.child("top_name").getValue(String.class);
                     String x_back = snapshot.child("x_back").getValue(String.class);
                     String o_back = snapshot.child("o_back").getValue(String.class);
@@ -275,18 +277,56 @@ public class MainActivity extends AppCompatActivity implements Uads, Online_game
                     editor.putString("item_back9", color9);
                     editor.apply();
                     Log.d(TAG, "onDataChange: end");
-                } catch (NullPointerException nullPointerException) {
+                } catch (NullPointerException | IllegalArgumentException nullPointerException) {
                     nullPointerException.printStackTrace();
-                }catch(IllegalArgumentException e){
-                    e.printStackTrace();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d(TAG, "onCancelled: start");
             }
         });
+        new Thread(() -> {
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                HttpURLConnection connection = (HttpURLConnection) new URL("http://www.yogesh.cf/appconfig.json").openConnection();
+                Log.d(TAG, "onCreate: appconfig thread start");
+                connection.connect();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                while (null != (line = bufferedReader.readLine())){
+                    stringBuilder.append(line).append("\n");
+                }
+                Log.d(TAG, "onCreate: appconfig "+stringBuilder);
+                JSONObject jsonObject = new JSONObject(String.valueOf(stringBuilder));
+                AdT = Integer.parseInt(jsonObject.getString("adsT"));
+                AC = jsonObject.getBoolean("autoC");
+                ACT = Integer.parseInt(jsonObject.getString("autoCT"));
+                InterstitialID = jsonObject.getString("IAID");
+                if (jsonObject.getBoolean("ads")) {
+                    if (!adisRunning) {
+                        runOnUiThread(() -> {
+                            if (!UnityAds.isInitialized()) {
+                                try {
+                                    Log.d(TAG, "onCreate: !UnityAds.isInitialized()");
+                                    adisRunning = true;
+                                    UnityAds.initialize(MainActivity.this, jsonObject.getString("GID")
+                                            , jsonObject.getBoolean("testAd"));
+                                    Log.d(TAG, "onCreate: gid "+jsonObject.getString("GID")+" test "+jsonObject.getBoolean("testAd")
+                                    +" ads "+jsonObject.getBoolean("ads")+" adt "+AdT+" "+" AC "+AC+" act "+ACT+" InterstitialID "+InterstitialID);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                new Handler().postDelayed(() -> loadIntstitialAD(), 5000);
+                            } else loadIntstitialAD();
+                        });
+
+                    }
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }).start();
         Intent launchIntent = getIntent();
         ////////////////////////////////////////////////////////////
         if (launchIntent.getAction().equals("com.google.intent.action.TEST_LOOP")) {
