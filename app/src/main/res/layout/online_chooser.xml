@@ -57,13 +57,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/create_server_btn"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                android:backgroundTint="@color/logo_back"
+                android:background="@drawable/createbtn"
                 android:text="Create"
                 android:textAllCaps="false"
                 android:textSize="14sp"
@@ -76,15 +75,15 @@
                 app:strokeColor="@color/purple_500"
                 app:strokeWidth="2dp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/join_server_btn"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/purple_500"
+                android:ellipsize="middle"
+                android:background="@drawable/joinbtnback"
                 android:text="Join"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
