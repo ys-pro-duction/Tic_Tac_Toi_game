@@ -396,7 +396,16 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            app:srcCompat="@drawable/oo" />
+            app:srcCompat="@drawable/oo"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:src="@drawable/oo_icon"
+            android:orientation="horizontal" />
 
     </androidx.cardview.widget.CardView>
 
@@ -459,7 +468,7 @@
         android:id="@+id/x_winner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alatsi"
+        android:fontFamily="@font/baloo_bhai_2_semibold"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:shadowColor="@color/winner_text_shadow"
@@ -480,7 +489,7 @@
         android:id="@+id/o_winner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alatsi"
+        android:fontFamily="@font/baloo_bhai_2_semibold"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:shadowColor="@color/winner_text_shadow"
