@@ -396,16 +396,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            app:srcCompat="@drawable/oo"
-            tools:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:src="@drawable/oo_icon"
-            android:orientation="horizontal" />
+            android:contentDescription="@string/o_player"
+            app:srcCompat="@drawable/oo" />
 
     </androidx.cardview.widget.CardView>
 
@@ -539,25 +531,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/online_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="2dp"
-        android:background="#00000000"
-        android:src="@drawable/ic_baseline_online"
+    <LinearLayout
+        android:id="@+id/o_win_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:rotation="180"
+        android:weightSum="2"
+        app:layout_constraintBottom_toTopOf="@+id/oxBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/exit_online_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="2dp"
-        android:background="#00000000"
-        android:src="@drawable/ic_baseline_exit_"
-        android:visibility="gone"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/x_win_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oxBox">
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

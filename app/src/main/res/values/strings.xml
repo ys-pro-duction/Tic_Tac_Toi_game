@@ -3,4 +3,5 @@
     <string name="winnertxt">Winner!!!!</string>
     <string name="loosertxt">Looser!!!!</string>
     <string name="loadingtxt">Loading...</string>
+    <string name="o_player">o player</string>
 </resources>
